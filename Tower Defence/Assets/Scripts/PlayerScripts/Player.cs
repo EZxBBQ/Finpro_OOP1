@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Player used to manage the player object
-// Apply singleton pattern
 public class Player : MonoBehaviour, IEndurance
 {
-    public static Player playerInstance { get; set; } // need to be public for consistent access
+    public static Player playerInstance { get; private set; }
     private PlayerLevel playerLevel;
     private EnduranceComponent enduranceComponent;
-    private int maxHealth = 100;
-    private int defense = 10;
 
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int defense = 10;
+    [SerializeField] private int currentHealth;
+
+    public delegate void HealthChanged(int currentHealth, int maxHealth);
+    public event HealthChanged OnHealthChanged;
 
     private void Awake()
     {
@@ -25,48 +27,50 @@ public class Player : MonoBehaviour, IEndurance
             Destroy(gameObject);
         }
 
-        // get the EnduranceComponent from the child object
         enduranceComponent = GetComponentInChildren<EnduranceComponent>();
         if (enduranceComponent == null)
         {
             Debug.LogError("EnduranceComponent not found in child object.");
 
-            // quit the editor if the component is not found
             #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
             #endif
         }
 
-        // get the PlayerLevel component from the child object
         playerLevel = GetComponentInChildren<PlayerLevel>();
-        if (enduranceComponent == null)
+        if (playerLevel == null)
         {
-            Debug.LogError("EnduranceComponent not found in child object.");
+            Debug.LogError("PlayerLevel component not found in child object.");
 
-            // quit the editor if the component is not found
             #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
             #endif
         }
     }
 
-    // properly clean up the singleton instance when the object is destroyed
+    private void Start()
+    {
+        currentHealth = maxHealth; // Initialize health at the start
+    }
+
     private void OnDestroy()
     {
-        Debug.Log("Player destroyed.");
         if (playerInstance == this)
         {
             playerInstance = null;
         }
     }
 
-    // need to be public so EnduranceComponent can access it
     public int GetMaxHealth()
     {
         return maxHealth;
     }
 
-    // need to be public so EnduranceComponent can access it
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     public int GetDefense()
     {
         return defense;
@@ -75,6 +79,7 @@ public class Player : MonoBehaviour, IEndurance
     public void IncreaseMaxHealth(int amount)
     {
         maxHealth += amount;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth); // Notify listeners
     }
 
     public void IncreaseDefense(int amount)
@@ -84,11 +89,34 @@ public class Player : MonoBehaviour, IEndurance
 
     public void RestoreHealthToMax()
     {
-        enduranceComponent.RestoreHealthToMax();
+        currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth); // Notify listeners
+    }
+
+    public void TakeDamage(int damage)
+    {
+        int effectiveDamage = Mathf.Max(damage - defense, 0); // Consider defense
+        currentHealth = Mathf.Max(currentHealth - effectiveDamage, 0); // Prevent health from going below 0
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth); // Notify listeners
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player has died.");
+        // Implement player death logic here
     }
 
     public void LevelUp()
     {
-        playerLevel.LevelUp(this);
+        if (playerLevel != null)
+        {
+            playerLevel.LevelUp(this);
+        }
     }
 }

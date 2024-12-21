@@ -60,19 +60,26 @@ public class Bullet : MonoBehaviour, IAttack
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (attackComponent != null)
+        if (collision.CompareTag("Enemy")) // If the bullet hits an enemy
         {
-            if (collision.gameObject.CompareTag("PlayerBullet"))
+            EnemyBehavior enemy = collision.GetComponent<EnemyBehavior>();
+            if (enemy != null)
             {
-                return;
+                enemy.TakeDamage(damage); // Apply damage to the enemy
+            }
+
+            // Destroy the bullet after hitting the enemy
+            if (bulletPool != null)
+            {
+                bulletPool.ReturnObject(this.gameObject);
             }
             else
             {
-                attackComponent.DealDamage(collision.gameObject);
-                bulletPool.ReturnObject(this.gameObject);
-            }  
+                Destroy(gameObject);
+            }
         }
     }
+
 
     public void SetPoolReference(ObjectPool pool)
     {
