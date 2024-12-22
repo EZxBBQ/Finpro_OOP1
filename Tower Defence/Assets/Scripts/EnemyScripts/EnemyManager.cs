@@ -12,9 +12,13 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private int totalEnemies = 4; // Base number of enemies per wave
 
     private List<GameObject> activeEnemies = new List<GameObject>(); // Track active enemies
+    private bool isWeaponSelected = false; // Tracks if a weapon has been selected
 
     private void Update()
     {
+        // Wait until the weapon is selected before starting waves
+        if (!isWeaponSelected) return;
+
         // Check if all enemies are killed to start the next wave
         activeEnemies.RemoveAll(enemy => enemy == null); // Remove null references (destroyed enemies)
         if (activeEnemies.Count == 0)
@@ -51,5 +55,12 @@ public class EnemyManager : MonoBehaviour
 
         // Add the spawned enemy to the active enemies list (if applicable)
         activeEnemies.Add(spawnedEnemy);
+    }
+
+    // Public method to notify that a weapon has been selected
+    public void SetWeaponSelected(bool selected)
+    {
+        isWeaponSelected = selected;
+        Debug.Log("Weapon has been selected! Enemies will now start spawning.");
     }
 }

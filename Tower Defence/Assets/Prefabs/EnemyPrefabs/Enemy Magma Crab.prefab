@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8656178945674901059}
   - component: {fileID: 3503280892498017338}
   m_Layer: 0
-  m_Name: Boss Magma Crab
+  m_Name: Enemy Magma Crab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

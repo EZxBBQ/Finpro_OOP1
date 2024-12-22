@@ -4153,6 +4153,7 @@ MonoBehaviour:
   - {fileID: 8507237763385796451, guid: b0147263e804a234cb207b2bf582baaa, type: 3}
   playerTransform: {fileID: 1381620512}
   combatManager: {fileID: 1762691389}
+  enemyManager: {fileID: 1494834386}
 --- !u!4 &844288248
 Transform:
   m_ObjectHideFlags: 0
@@ -4312,8 +4313,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 753d9244e22afc14e8f9520cd8fa2d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyManager: {fileID: 1494834386}
   bossSceneName: BossBattle
+  mainSceneName: MainBattle
 --- !u!4 &1181975909
 Transform:
   m_ObjectHideFlags: 0
@@ -5205,7 +5206,6 @@ MonoBehaviour:
   - {fileID: 3238466220109804781, guid: 032e1df609347e841a124ccea6d99846, type: 3}
   - {fileID: 16053125914071273, guid: 652e2cc90b94d1f40876e11f0103a396, type: 3}
   totalEnemies: 4
-  waveNumber: 1
 --- !u!4 &1494834387
 Transform:
   m_ObjectHideFlags: 0
