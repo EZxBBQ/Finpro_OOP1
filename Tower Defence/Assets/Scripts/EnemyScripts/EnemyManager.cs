@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class EnemyManager : MonoBehaviour
 
     [Header("Wave System")]
     [SerializeField] private int totalEnemies = 4; // Base number of enemies per wave
+    [SerializeField] private string bossSceneName = "BossBattle"; // Name of the boss battle scene
 
     private List<GameObject> activeEnemies = new List<GameObject>(); // Track active enemies
     private bool isWeaponSelected = false; // Tracks if a weapon has been selected
@@ -32,13 +34,25 @@ public class EnemyManager : MonoBehaviour
         int waveNumber = WaveManager.Instance.GetWaveNumber();
         Debug.Log($"Starting Wave: {waveNumber}");
 
-        for (int i = 0; i < totalEnemies; i++)
+        if (waveNumber % 5 == 0) // Check if waveNumber is a multiple of 5
         {
-            SpawnEnemy(enemyPrefabs[0]); // Assuming index 0 is the basic enemy
+            StartBossBattle(); // Transition to the boss battle scene
+        }
+        else
+        {
+            SpawnEnemies(); // Spawn regular enemies for other waves
         }
 
         totalEnemies += 2; // Increase enemies per wave for scaling difficulty
         WaveManager.Instance.IncrementWave(); // Notify WaveManager to increment the wave
+    }
+
+    private void SpawnEnemies()
+    {
+        for (int i = 0; i < totalEnemies; i++)
+        {
+            SpawnEnemy(enemyPrefabs[0]); // Assuming index 0 is the basic enemy
+        }
     }
 
     private void SpawnEnemy(GameObject enemyPrefab)
@@ -55,6 +69,12 @@ public class EnemyManager : MonoBehaviour
 
         // Add the spawned enemy to the active enemies list (if applicable)
         activeEnemies.Add(spawnedEnemy);
+    }
+
+    private void StartBossBattle()
+    {
+        Debug.Log("Transitioning to Boss Battle Scene...");
+        SceneManager.LoadScene(bossSceneName); // Load the boss battle scene
     }
 
     // Public method to notify that a weapon has been selected

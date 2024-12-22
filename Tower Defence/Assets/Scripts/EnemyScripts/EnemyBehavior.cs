@@ -67,7 +67,7 @@ public class EnemyBehavior : MonoBehaviour
                 Destroy(collision.gameObject); // Destroy the bullet upon hitting the enemy
             }
         }
-}
+    }
 
 
     private void OnTriggerExit2D(Collider2D collision)

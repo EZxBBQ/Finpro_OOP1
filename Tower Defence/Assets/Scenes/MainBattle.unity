@@ -5202,7 +5202,7 @@ MonoBehaviour:
   - {fileID: 184519622}
   enemyPrefabs:
   - {fileID: 537129508700586827, guid: 8aaa16761abbefa40853f5c2383e710f, type: 3}
-  - {fileID: 2024197768264975510, guid: 096e438ba7d6a344b932435094004e57, type: 3}
+  - {fileID: 2024197768264975510, guid: 2b90ad90d1c6c3348952d9708cf29a89, type: 3}
   - {fileID: 3238466220109804781, guid: 032e1df609347e841a124ccea6d99846, type: 3}
   - {fileID: 16053125914071273, guid: 652e2cc90b94d1f40876e11f0103a396, type: 3}
   totalEnemies: 4
