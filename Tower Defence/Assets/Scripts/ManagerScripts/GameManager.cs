@@ -1,12 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// GameManager used to manage the game state
-// Apply singleton pattern
 public class GameManager : MonoBehaviour
 {
-    public static GameManager gameManagerInstance { get; set; }
+    public static GameManager gameManagerInstance { get; private set; }
+    private bool isPaused = false;
 
     private void Awake()
     {
@@ -21,7 +19,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // properly clean up the singleton instance when the object is destroyed
     private void OnDestroy()
     {
         Debug.Log("GameManager destroyed.");
@@ -29,5 +26,19 @@ public class GameManager : MonoBehaviour
         {
             gameManagerInstance = null;
         }
+    }
+
+    // Toggle pause state
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+        Debug.Log("Game " + (isPaused ? "paused." : "resumed."));
+    }
+
+    // Check if the game is paused
+    public bool IsPaused()
+    {
+        return isPaused;
     }
 }

@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class BossBehavior : MonoBehaviour
 {
+    [SerializeField] private int health = 1000;         // Boss health
+    [SerializeField] private int attackDamage = 10;    // Damage dealt to the player on collision
 
-    [SerializeField] private float speed = 3f;         // Movement speed of the enemy
-    [SerializeField] private int health = 1000;         // Enemy's health
-    [SerializeField] private int attackDamage = 10;   // Damage dealt to the player on collision
+    private Transform player;                          // Reference to the player's transform
+    private bool isNearWall = false;                   // To check if the boss is near the invisible wall
 
-    private Transform player;                         // Reference to the player's transform
-    private bool isNearWall = false;                  // To check if the enemy is near the invisible wall
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Find the player by tag
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -27,54 +24,37 @@ public class BossBehavior : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        // No movement logic here to make the boss static
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("InvisibleWall"))
+        if (collision.CompareTag("Player"))
         {
-            // Stop the enemy from moving closer to the player
-            isNearWall = true;
-        }
-        else if (collision.CompareTag("Player"))
-        {
-            // When the enemy collides with the player, deal damage to the player
+            // When the boss collides with the player, deal damage to the player
             Player playerScript = collision.GetComponent<Player>();
             if (playerScript != null)
             {
                 playerScript.TakeDamage(attackDamage); // Reduce player's health
                 Debug.Log("Player hit! Dealt " + attackDamage + " damage.");
-
             }
         }
-        else if (collision.CompareTag("PlayerBullet")) // Check if the enemy is hit by a bullet
+        else if (collision.CompareTag("PlayerBullet")) // Check if the boss is hit by a bullet
         {
             Bullet bullet = collision.GetComponent<Bullet>();
             if (bullet != null)
             {
                 TakeDamage(bullet.GetAttackDamage());
-                Destroy(collision.gameObject); // Destroy the bullet upon hitting the enemy
+                Destroy(collision.gameObject); // Destroy the bullet upon hitting the boss
             }
-        }
-    }
-
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        // Allow the enemy to move again if it leaves the wall area
-        if (collision.CompareTag("InvisibleWall"))
-        {
-            isNearWall = false;
         }
     }
 
     public void TakeDamage(int damageAmount)
     {
-        // Reduce enemy health
+        // Reduce boss health
         health -= damageAmount;
 
         if (health <= 0)
@@ -85,7 +65,7 @@ public class BossBehavior : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy has died.");
-        Destroy(gameObject); // Destroy the enemy GameObject
+        Debug.Log("Boss has been defeated!");
+        Destroy(gameObject); // Destroy the boss GameObject
     }
 }

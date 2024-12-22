@@ -63,4 +63,8 @@ public class WaveManager : MonoBehaviour
     {
         return isBossBattleActive;
     }
+
+    public void ResetWaveNumber(){
+        waveNumber = 1;
+    }
 }
