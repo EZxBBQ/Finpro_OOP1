@@ -21,6 +21,7 @@ public class CombatManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            Debug.Log("Mouse0 pressed");
             weaponAnimator?.SetBool("isShooting", true);
             Shoot();
         }

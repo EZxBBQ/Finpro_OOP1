@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6016261280466677305}
   - component: {fileID: 6994281462346910103}
   - component: {fileID: 7348357820121030881}
+  - component: {fileID: 6371197772858795676}
+  - component: {fileID: 6885916898590182421}
   m_Layer: 0
   m_Name: Boss Beetle
   m_TagString: Untagged
@@ -158,3 +160,38 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &6371197772858795676
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176338435442694629}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 274200403662fcf47a5d1640e26a078c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6885916898590182421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176338435442694629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a58aab3a5f7a84f8180c1be59e3b03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1000
+  attackDamage: 10

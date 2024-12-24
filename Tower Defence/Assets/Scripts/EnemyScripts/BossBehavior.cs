@@ -7,12 +7,14 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] private int health = 1000;         // Boss health
     [SerializeField] private int attackDamage = 10;    // Damage dealt to the player on collision
 
+    private BossManager bossManager;                   // Reference to the BossManager script
     private Transform player;                          // Reference to the player's transform
     private bool isNearWall = false;                   // To check if the boss is near the invisible wall
 
     private void Start()
     {
         // Find the player by tag
+        bossManager = GameObject.Find("BossSpawnManager").GetComponent<BossManager>();
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
@@ -67,5 +69,6 @@ public class BossBehavior : MonoBehaviour
     {
         Debug.Log("Boss has been defeated!");
         Destroy(gameObject); // Destroy the boss GameObject
+        bossManager.OnBossDefeated(); // Notify the BossManager that the boss is defeated
     }
 }

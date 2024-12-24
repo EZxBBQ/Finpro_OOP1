@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
 {
@@ -14,7 +15,12 @@ public class BossManager : MonoBehaviour
     [SerializeField] private float spawnInterval = 5f; // Time interval for spawning basic enemies
 
     [Header("Scene Settings")]
-    [SerializeField] private string mainSceneName = "MainBattle"; // Name of the main battle scene
+    [SerializeField] private string mainSceneName = "MainMenu"; // Name of the main battle scene
+
+    [SerializeField] private GameObject transitionImage;
+    [SerializeField] private Animator animator;
+
+    [SerializeField] private Text youWInText;
 
     private GameObject bossInstance;
     private bool isBossAlive = true; // Tracks if the boss is alive
@@ -23,6 +29,8 @@ public class BossManager : MonoBehaviour
     {
         SpawnBoss();
         StartCoroutine(EnemySpawnerRoutine());
+        transitionImage.SetActive(false);
+        youWInText.gameObject.SetActive(false);
     }
 
     private void SpawnBoss()
@@ -72,8 +80,22 @@ public class BossManager : MonoBehaviour
 
     public void OnBossDefeated()
     {
-        Debug.Log("Boss defeated! Returning to the main battle scene...");
         isBossAlive = false; // Stop the spawning routine
-        SceneManager.LoadScene(mainSceneName); // Return to the main battle scene
+        youWInText.gameObject.SetActive(true);
+        LoadScene(mainSceneName);
+    }
+
+     public void LoadScene(string sceneName)
+    {
+        Time.timeScale = 1f;    // make sure the game is unpaused when loading new scene
+        transitionImage.SetActive(true);    
+        StartCoroutine(TransitionAnimation(sceneName));
+    }
+
+    private IEnumerator TransitionAnimation(string sceneName)
+    {
+        animator.SetTrigger("isStarted");
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene(sceneName);
     }
 }

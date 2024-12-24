@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 534075970293990605}
   - component: {fileID: 3911100166901210997}
   - component: {fileID: 7867358741966827024}
+  - component: {fileID: 8526634892071562034}
   m_Layer: 6
   m_Name: Enemy Firebug
   m_TagString: Enemy
@@ -174,3 +175,24 @@ MonoBehaviour:
   speed: 1
   health: 50
   attackDamage: 10
+--- !u!95 &8526634892071562034
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537129508700586827}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 31b8b79f2d174ce4cbcad3590cc4e504, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

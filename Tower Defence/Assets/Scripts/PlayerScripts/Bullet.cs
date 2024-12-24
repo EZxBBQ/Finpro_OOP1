@@ -43,7 +43,6 @@ public class Bullet : MonoBehaviour, IAttack
         if (Time.timeScale > 0)
         {
            lifeTimer -= 2f * Time.deltaTime;
-            Debug.Log(lifeTimer);
             if (lifeTimer > 0f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
